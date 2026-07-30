@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Домашняя работа — Денис</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;font-family:'DejaVu Sans','Open Sans',Arial,sans-serif;color:#3A3532;background-color:#FBF8F3;background-image:url('photo.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;background:rgba(251,248,243,.38);z-index:0;pointer-events:none}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;color:#3A3532;font-weight:normal}
+.muted{color:#6B625C}
+.container{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:32px 20px 80px;display:flex;flex-direction:column;gap:22px}
+.card{background:#FBF8F3;border:1px solid #D9CFC2;border-radius:18px;padding:26px 28px;box-shadow:0 8px 24px rgba(58,53,50,.08);display:flex;flex-direction:column;gap:16px}
+.card h2{font-size:26px;display:flex;align-items:center;gap:12px}
+.card h3{font-size:20px;display:flex;align-items:center;gap:10px}
+.card p,.card li{font-size:16px;line-height:1.55}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:10px;padding-left:4px}
+.card ul li{display:flex;align-items:flex-start;gap:10px}
+.card ul li svg{flex-shrink:0;margin-top:3px}
+.accent{color:#C97B5B}
+.accent-dark{color:#A85D3F}
+.divider{height:1px;background:#D9CFC2;width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#C97B5B;color:#FBF8F3;border:none;border-radius:12px;padding:12px 22px;font-family:inherit;font-size:16px;cursor:pointer;transition:background .15s,transform .1s;align-self:flex-start}
+.btn:hover{background:#A85D3F}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{background:#D9CFC2;color:#6B625C;cursor:not-allowed}
+.screen{display:none}
+.screen.active{display:flex;flex-direction:column;gap:22px}
+.intro-greeting{font-size:34px;font-family:Georgia,serif;color:#A85D3F}
+.time-badge{display:inline-flex;align-items:center;gap:8px;background:#E8C989;color:#3A3532;padding:8px 14px;border-radius:999px;font-size:15px;align-self:flex-start}
+.warn-box{background:#FBF8F3;border:1px dashed #C97B5B;border-radius:14px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;color:#A85D3F;font-size:15px}
+.task-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.progress-bar{width:100%;height:8px;background:#D9CFC2;border-radius:999px;overflow:hidden}
+.progress-bar>div{height:100%;background:#A9BFA0;width:0%;transition:width .3s}
+.timer{display:inline-flex;align-items:center;gap:8px;background:#FBF8F3;border:1px solid #D9CFC2;padding:6px 12px;border-radius:999px;font-size:15px;font-variant-numeric:tabular-nums}
+.timer.urgent{background:#E8C989;border-color:#C97B5B;color:#A85D3F}
+.question-text{font-size:19px;font-family:Georgia,serif;line-height:1.5;padding:10px 0}
+.choices{display:flex;flex-wrap:wrap;gap:10px}
+.choice-btn{background:#FBF8F3;border:1px solid #D9CFC2;border-radius:12px;padding:10px 18px;font-family:inherit;font-size:16px;cursor:pointer;color:#3A3532;transition:all .15s}
+.choice-btn:hover{border-color:#C97B5B;background:#F3ECE0}
+.choice-btn.selected{background:#C97B5B;color:#FBF8F3;border-color:#C97B5B}
+.text-input{font-family:inherit;font-size:17px;padding:10px 14px;border:1px solid #D9CFC2;border-radius:12px;background:#FBF8F3;color:#3A3532;outline:none;width:100%;max-width:420px;transition:border-color .15s}
+.text-input:focus{border-color:#C97B5B}
+.matching-wrap{display:flex;gap:24px;flex-wrap:wrap;justify-content:space-between}
+.matching-col{display:flex;flex-direction:column;gap:8px;flex:1 1 260px;min-width:240px}
+.match-item{padding:10px 14px;border:1px solid #D9CFC2;border-radius:12px;background:#FBF8F3;cursor:pointer;font-size:15px;transition:all .15s;user-select:none}
+.match-item:hover{border-color:#C97B5B}
+.match-item.selected{background:#E8C989;border-color:#C97B5B}
+.match-item.matched{background:#A9BFA0;border-color:#A9BFA0;cursor:default}
+.match-item.wrong-flash{background:#E8C989;border-color:#A85D3F}
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#F3ECE0;border:1px dashed #D9CFC2;border-radius:14px;min-height:60px}
+.bank-word{padding:8px 14px;background:#FBF8F3;border:1px solid #D9CFC2;border-radius:10px;cursor:grab;font-size:15px;user-select:none;transition:opacity .15s}
+.bank-word.dragging{opacity:.4}
+.bank-word.used{opacity:.3;cursor:default;text-decoration:line-through}
+.sentence-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;font-size:17px;font-family:Georgia,serif}
+.drop-zone{display:inline-flex;align-items:center;justify-content:center;min-width:130px;min-height:38px;padding:4px 12px;border:2px dashed #C97B5B;border-radius:10px;background:#FBF8F3;font-size:15px;font-family:inherit;color:#6B625C;transition:background .15s}
+.drop-zone.over{background:#E8C989}
+.drop-zone.filled{border-style:solid;border-color:#A9BFA0;background:#F3ECE0;color:#3A3532}
+.review-list{display:flex;flex-direction:column;gap:10px}
+.review-item{display:flex;flex-direction:column;gap:4px;padding:10px 14px;border-radius:12px;background:#FBF8F3;border:1px solid #D9CFC2;font-size:15px}
+.review-item.correct{border-left:4px solid #A9BFA0}
+.review-item.wrong{border-left:4px solid #C97B5B}
+.review-item .q{color:#6B625C;font-size:14px}
+.review-item .a{font-size:15px}
+.review-item .a .correct-ans{color:#3A3532;font-weight:bold}
+.review-item .a .your-ans-wrong{color:#A85D3F;text-decoration:line-through;margin-right:6px}
+.review-item .rule{font-size:13px;color:#6B625C;font-style:italic;margin-top:2px}
+.stats-grid{display:flex;flex-direction:column;gap:10px}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#FBF8F3;border:1px solid #D9CFC2;border-radius:12px}
+.stat-row .label{font-size:15px}
+.stat-row .value{font-family:Georgia,serif;font-size:18px;color:#A85D3F}
+.stat-row.total{background:#E8C989;border-color:#C97B5B}
+.stat-row.total .value{color:#3A3532;font-size:22px}
+.stat-row.grand{background:#A9BFA0;border-color:#A9BFA0}
+.stat-row.grand .value{color:#3A3532;font-size:24px}
+.praise{background:#A9BFA0;border-radius:16px;padding:22px;text-align:center;font-family:Georgia,serif;font-size:22px;color:#3A3532}
+.reminder{background:#E8C989;border-radius:14px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;font-size:15px}
+.icon-inline{display:inline-flex;width:22px;height:22px;color:#C97B5B;flex-shrink:0}
+@media(max-width:600px){
+  .container{padding:18px 12px 60px}
+  .card{padding:20px 18px}
+  .intro-greeting{font-size:28px}
+  .card h2{font-size:22px}
+  .question-text{font-size:17px}
+  .matching-col{min-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ========== INTRO ========== -->
+<section class="screen active" id="screen-intro">
+<div class="card">
+  <h1 class="intro-greeting">Hello, Денис,</h1>
+  <div class="divider"></div>
+  <p>Это задания на время.</p>
+  <p>Первый блок — <span class="accent">слова</span>, второй блок — <span class="accent">грамматика</span>.</p>
+  <p>Нужно пройти всё целиком за один раз, <strong>не перезагружая страницу</strong> и не выходя с сайта — иначе все ответы сбросятся, и придётся начинать заново.</p>
+  <div class="time-badge">
+    <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    Примерное время выполнения: <strong>около 12 минут</strong>
+  </div>
+  <p>После завершения — сделай скриншот страницы с результатами и отправь в <strong>Max</strong>.</p>
+  <div class="warn-box">
+    <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5"/><circle cx="12" cy="18" r=".5" fill="currentColor"/></svg>
+    <span>Внимание: если перезагрузишь страницу или уйдёшь с сайта — все ответы сбросятся, и придётся начинать заново.</span>
+  </div>
+  <button class="btn" id="btn-start">
+    Начать
+    <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+  </button>
+</div>
+</section>
+
+<!-- ========== TASK ========== -->
+<section class="screen" id="screen-task">
+<div class="card">
+  <div class="task-header">
+    <h2 id="task-title">Задание</h2>
+    <div class="timer" id="task-timer">
+      <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span id="timer-text">—</span>
+    </div>
+  </div>
+  <div class="progress-bar"><div id="task-progress"></div></div>
+  <p class="muted" id="task-subtitle" style="font-size:14px"></p>
+  <div id="task-body"></div>
+  <div id="task-actions" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+</div>
+</section>
+
+<!-- ========== REVIEW ========== -->
+<section class="screen" id="screen-review">
+<div class="card">
+  <h2 id="review-title">Разбор</h2>
+  <p class="muted" id="review-subtitle" style="font-size:14px"></p>
+  <div class="review-list" id="review-list"></div>
+  <button class="btn" id="btn-next-task">
+    Дальше
+    <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+  </button>
+</div>
+</section>
+
+<!-- ========== FINAL ========== -->
+<section class="screen" id="screen-final">
+<div class="card">
+  <h2>Итоги</h2>
+  <div class="stats-grid" id="stats-grid"></div>
+</div>
+<div class="card">
+  <div class="praise">Денис, ты молодец, ты сделал домашку!</div>
+  <div class="reminder">
+    <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="8" cy="15" r="1.5"/><path d="M21 15l-5-4-6 5-3-2-4 3"/></svg>
+    <span><strong>Сделай скриншот этой страницы с результатами и отправь его в Max.</strong></span>
+  </div>
+</div>
+</section>
+
+</div>
+
+<script>
+/* ================================================================
+   DATA
+   ================================================================ */
+
+const MATCHING_PAIRS=[
+  {en:"meat",ru:"мясо"},{en:"I don't mind",ru:"я не против"},
+  {en:"cosy",ru:"уютный"},{en:"behind",ru:"позади"},
+  {en:"in front of",ru:"перед"},{en:"above",ru:"над, выше"},
+  {en:"between",ru:"между"},{en:"under",ru:"под, ниже"},
+  {en:"next to",ru:"рядом с"},{en:"wash",ru:"мыть, стирать"},
+  {en:"plate",ru:"тарелка"},{en:"take a shower",ru:"принять душ"},
+  {en:"child",ru:"ребёнок"},{en:"adult",ru:"взрослый"},
+  {en:"full",ru:"полный"},{en:"empty",ru:"пустой"},
+  {en:"to be in a hurry",ru:"спешить"},{en:"downstairs",ru:"внизу"},
+  {en:"yard",ru:"двор"},{en:"garage",ru:"гараж"}
+];
+
+const TRANSLATE_WORDS=[
+  {ru:"мясо",en:"meat"},{ru:"я не против",en:"I don't mind"},
+  {ru:"уютный",en:"cosy"},{ru:"позади",en:"behind"},
+  {ru:"перед",en:"in front of"},{ru:"над, выше",en:"above"},
+  {ru:"между",en:"between"},{ru:"под, ниже",en:"under"},
+  {ru:"рядом с",en:"next to"},{ru:"мыть, стирать",en:"wash"},
+  {ru:"тарелка",en:"plate"},{ru:"принять душ",en:"take a shower"},
+  {ru:"ребёнок",en:"child"},{ru:"взрослый",en:"adult"},
+  {ru:"полный",en:"full"},{ru:"пустой",en:"empty"},
+  {ru:"спешить",en:"to be in a hurry"},{ru:"внизу",en:"downstairs"},
+  {ru:"двор",en:"yard"},{ru:"гараж",en:"garage"}
+];
+
+const DND_SENTENCES=[
+  {text:"I keep my bicycle in the ___.",answer:"garage"},
+  {text:"The children are playing in the ___.",answer:"yard"},
+  {text:"Please ___ the dishes after dinner.",answer:"wash"},
+  {text:"Put the clean ___ on the table.",answer:"plate"},
+  {text:"I want to ___ before bed.",answer:"take a shower"},
+  {text:"The box is ___ — there is nothing inside.",answer:"empty"},
+  {text:"The glass is ___ of water.",answer:"full"},
+  {text:"The cat is hiding ___ the sofa.",answer:"behind"},
+  {text:"The picture is hanging ___ the fireplace.",answer:"above"},
+  {text:"The dog is sitting ___ me and my friend.",answer:"between"},
+  {text:"I don't like ___ — I prefer to relax.",answer:"to be in a hurry"},
+  {text:"He went ___ to get his coat.",answer:"downstairs"}
+];
+
+const SOME_ANY=[
+  {text:"I have ___ friends in London.",answer:"some",rule:"some — утверждение"},
+  {text:"Do you have ___ brothers or sisters?",answer:"any",rule:"any — вопрос"},
+  {text:"There isn't ___ milk in the fridge.",answer:"any",rule:"any — отрицание"},
+  {text:"She bought ___ apples at the market.",answer:"some",rule:"some — утверждение"},
+  {text:"Are there ___ letters for me?",answer:"any",rule:"any — вопрос"},
+  {text:"We need ___ eggs for the cake.",answer:"some",rule:"some — утверждение"},
+  {text:"He doesn't have ___ money.",answer:"any",rule:"any — отрицание"},
+  {text:"There are ___ books on the table.",answer:"some",rule:"some — утверждение"},
+  {text:"I didn't see ___ cats in the garden.",answer:"any",rule:"any — отрицание"},
+  {text:"She has ___ questions about the homework.",answer:"some",rule:"some — утверждение"},
+  {text:"Do they sell ___ fresh bread here?",answer:"any",rule:"any — вопрос"},
+  {text:"There aren't ___ chairs in the room.",answer:"any",rule:"any — отрицание"}
+];
+
+const ARTICLES=[
+  {text:"I saw ___ dog in the park.",answer:"a",rule:"Rule 1 — первое упоминание"},
+  {text:"The dog was very friendly. ___ dog liked children.",answer:"the",rule:"Rule 1 — повторное упоминание"},
+  {text:"___ sun is very hot today.",answer:"the",rule:"Rule 2 — единственный в мире"},
+  {text:"I love ___ cats.",answer:"—",rule:"Rule 3 — в целом, множественное число"},
+  {text:"She bought ___ book yesterday.",answer:"a",rule:"Rule 1 — первое упоминание"},
+  {text:"___ moon is bright tonight.",answer:"the",rule:"Rule 2 — единственный в мире"},
+  {text:"He drinks ___ coffee every morning.",answer:"—",rule:"Rule 3 — в целом, неисчисляемое"},
+  {text:"There is ___ apple on the table.",answer:"an",rule:"Rule 1 — первое упоминание"},
+  {text:"___ Earth goes around the sun.",answer:"the",rule:"Rule 2 — единственный в мире"},
+  {text:"I like ___ music.",answer:"—",rule:"Rule 3 — в целом, неисчисляемое"},
+  {text:"She has ___ cat.",answer:"a",rule:"Rule 1 — первое упоминание"},
+  {text:"___ sky is blue today.",answer:"the",rule:"Rule 2 — единственный в мире"}
+];
+
+/* ================================================================
+   TASK DEFINITIONS
+   ================================================================ */
+
+const TASKS=[
+  {id:"1.1",title:"Задание 1.1 — Matching",subtitle:"Соедини английские слова с русскими переводами. Кликни на слово слева, затем на перевод справа.",type:"matching",time:90},
+  {id:"1.2",title:"Задание 1.2 — Перевод → слово",subtitle:"Введи английское слово по русскому переводу. На каждое слово — 7 секунд.",type:"translate",perItem:7},
+  {id:"1.3",title:"Задание 1.3 — Вставь слово",subtitle:"Перетащи подходящее слово из банка в пропуск. На каждое предложение — 10 секунд.",type:"dnd",perItem:10},
+  {id:"2.1",title:"Задание 2.1 — some / any (выбор)",subtitle:"Выбери some или any. На каждое предложение — 8 секунд.",type:"choice",options:["some","any"],data:SOME_ANY,perItem:8},
+  {id:"2.2",title:"Задание 2.2 — some / any (ввод)",subtitle:"Введи some или any. На каждое предложение — 8 секунд.",type:"input",data:SOME_ANY,perItem:8},
+  {id:"2.3",title:"Задание 2.3 — Артикли (выбор)",subtitle:"Выбери a / an / the / — . На каждое предложение — 8 секунд.",type:"choice",options:["a","an","the","—"],data:ARTICLES,perItem:8},
+  {id:"2.4",title:"Задание 2.4 — Артикли (ввод)",subtitle:"Введи a, an, the или — (тире), если артикль не нужен. На каждое предложение — 8 секунд.",type:"input",data:ARTICLES,perItem:8}
+];
+
+/* ================================================================
+   STATE
+   ================================================================ */
+
+const state={currentTask:-1,results:{}};
+
+/* ================================================================
+   HELPERS
+   ================================================================ */
+
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function norm(s){return(s||"").trim().toLowerCase().replace(/\s+/g," ")}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+const SVG_CHECK='<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="#A9BFA0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>';
+const SVG_CROSS='<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="#C97B5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>';
+
+/* ================================================================
+   TIMER
+   ================================================================ */
+
+let _tInterval=null,_tRem=0;
+
+function startTimer(sec,onEnd){
+  stopTimer();_tRem=sec;
+  const el=document.getElementById('timer-text'),wr=document.getElementById('task-timer');
+  function render(){
+    const m=Math.floor(_tRem/60),s=_tRem%60;
+    el.textContent=m>0?m+":"+String(s).padStart(2,'0'):s+" сек";
+    wr.classList.toggle('urgent',_tRem<=5);
+  }
+  render();
+  _tInterval=setInterval(()=>{
+    _tRem--;
+    if(_tRem<=0){stopTimer();render();if(onEnd)onEnd();}
+    else render();
+  },1000);
+}
+function stopTimer(){if(_tInterval){clearInterval(_tInterval);_tInterval=null}document.getElementById('task-timer').classList.remove('urgent')}
+function setTimerStatic(t){stopTimer();document.getElementById('timer-text').textContent=t}
+
+/* ================================================================
+   TASK LAUNCHER
+   ================================================================ */
+
+function startTask(idx){
+  state.currentTask=idx;
+  const t=TASKS[idx];
+  document.getElementById('task-title').textContent=t.title;
+  document.getElementById('task-subtitle').textContent=t.subtitle;
+  document.getElementById('task-progress').style.width=(idx/TASKS.length*100)+"%";
+  const body=document.getElementById('task-body'),act=document.getElementById('task-actions');
+  body.innerHTML="";act.innerHTML="";
+  if(t.type==="matching")runMatching(t,body,act);
+  else if(t.type==="translate")runTranslate(t,body,act);
+  else if(t.type==="dnd")runDnD(t,body,act);
+  else if(t.type==="choice")runChoice(t,body,act);
+  else if(t.type==="input")runInput(t,body,act);
+}
+
+function finishTask(results){
+  stopTimer();
+  const t=TASKS[state.currentTask];
+  state.results[t.id]=results;
+  showReview(t,results);
+}
+
+/* ================================================================
+   1.1 MATCHING
+   ================================================================ */
+
+function runMatching(task,body,act){
+  const leftItems=MATCHING_PAIRS.map(p=>p.en);
+  const rightItems=shuffle(MATCHING_PAIRS.map(p=>p.ru));
+  const wrap=document.createElement('div');wrap.className='matching-wrap';
+  const leftCol=document.createElement('div');leftCol.className='matching-col';
+  const rightCol=document.createElement('div');rightCol.className='matching-col';
+  const lTitle=document.createElement('div');lTitle.className='muted';lTitle.style.fontSize='13px';lTitle.textContent='English';leftCol.appendChild(lTitle);
+  const rTitle=document.createElement('div');rTitle.className='muted';rTitle.style.fontSize='13px';rTitle.textContent='Русский';rightCol.appendChild(rTitle);
+
+  let selLeft=null;
+  const matched=new Set();
+  const correctPairs=[];
+
+  leftItems.forEach(en=>{
+    const el=document.createElement('div');el.className='match-item';el.textContent=en;el.dataset.en=en;
+    el.addEventListener('click',()=>{
+      if(matched.has(en))return;
+      if(selLeft&&selLeft.el!==el)selLeft.el.classList.remove('selected');
+      el.classList.add('selected');selLeft={en,el};
+    });
+    leftCol.appendChild(el);
+  });
+
+  rightItems.forEach(ru=>{
+    const el=document.createElement('div');el.className='match-item';el.textContent=ru;el.dataset.ru=ru;
+    el.addEventListener('click',()=>{
+      if(!selLeft||el.classList.contains('matched'))return;
+      const en=selLeft.en;
+      const correct=MATCHING_PAIRS.find(p=>p.en===en).ru;
+      if(ru===correct){
+        selLeft.el.classList.remove('selected');selLeft.el.classList.add('matched');
+        el.classList.add('matched');matched.add(en);
+        correctPairs.push({en,ru});selLeft=null;
+        if(matched.size===leftItems.length){
+          stopTimer();
+          setTimeout(()=>{
+            const res=MATCHING_PAIRS.map(p=>{
+              const found=correctPairs.find(c=>c.en===p.en);
+              return{question:p.en,userAnswer:found?found.ru:"(не соединено)",correctAnswer:p.ru,isCorrect:!!found,rule:""};
+            });
+            finishTask(res);
+          },350);
+        }
+      }else{
+        el.classList.add('wrong-flash');selLeft.el.classList.add('wrong-flash');
+        const sl=selLeft;
+        setTimeout(()=>{el.classList.remove('wrong-flash');sl.el.classList.remove('wrong-flash','selected')},600);
+        selLeft=null;
+      }
+    });
+    rightCol.appendChild(el);
+  });
+
+  wrap.appendChild(leftCol);wrap.appendChild(rightCol);body.appendChild(wrap);
+
+  const finBtn=document.createElement('button');finBtn.className='btn';finBtn.textContent='Завершить';
+  finBtn.addEventListener('click',()=>{
+    const res=MATCHING_PAIRS.map(p=>{
+      const found=correctPairs.find(c=>c.en===p.en);
+      return{question:p.en,userAnswer:found?found.ru:"(не соединено)",correctAnswer:p.ru,isCorrect:!!found,rule:""};
+    });
+    finishTask(res);
+  });
+  act.appendChild(finBtn);
+
+  startTimer(task.time,()=>{
+    const res=MATCHING_PAIRS.map(p=>{
+      const found=correctPairs.find(c=>c.en===p.en);
+      return{question:p.en,userAnswer:found?found.ru:"(время вышло)",correctAnswer:p.ru,isCorrect:!!found,rule:""};
+    });
+    finishTask(res);
+  });
+}
+
+/* ================================================================
+   1.2 TRANSLATE
+   ================================================================ */
+
+function runTranslate(task,body,act){
+  const words=TRANSLATE_WORDS.slice();let idx=0;const results=[];
+  const qW=document.createElement('div');qW.style.cssText='display:flex;flex-direction:column;gap:12px';body.appendChild(qW);
+  const counter=document.createElement('div');counter.className='muted';counter.style.fontSize='14px';qW.appendChild(counter);
+  const qText=document.createElement('div');qText.className='question-text';qW.appendChild(qText);
+  const input=document.createElement('input');input.type='text';input.className='text-input';input.autocomplete='off';input.spellcheck=false;qW.appendChild(input);
+  const btn=document.createElement('button');btn.className='btn';btn.textContent='Ответить';act.appendChild(btn);
+
+  function show(){
+    if(idx>=words.length){finishTask(results);return}
+    const w=words[idx];
+    counter.textContent=`Слово ${idx+1} из ${words.length}`;
+    qText.textContent=w.ru;input.value="";input.focus();
+    document.getElementById('task-progress').style.width=((state.currentTask+idx/words.length)/TASKS.length*100)+"%";
+    startTimer(task.perItem,()=>{
+      results.push({question:w.ru,userAnswer:"(время вышло)",correctAnswer:w.en,isCorrect:false,rule:""});
+      idx++;show();
+    });
+  }
+  function submit(){
+    stopTimer();const w=words[idx];
+    results.push({question:w.ru,userAnswer:input.value.trim()||"(пусто)",correctAnswer:w.en,isCorrect:norm(input.value)===norm(w.en),rule:""});
+    idx++;show();
+  }
+  btn.addEventListener('click',submit);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
+  show();
+}
+
+/* ================================================================
+   1.3 DRAG-AND-DROP
+   ================================================================ */
+
+function runDnD(task,body,act){
+  const sentences=DND_SENTENCES.slice();
+  const bankWords=shuffle(sentences.map(s=>s.answer));
+  let idx=0;const results=[];const usedWords=new Set();
+
+  const bank=document.createElement('div');bank.className='word-bank';body.appendChild(bank);
+  bankWords.forEach(w=>{
+    const el=document.createElement('div');el.className='bank-word';el.textContent=w;el.draggable=true;el.dataset.word=w;
+    el.addEventListener('dragstart',e=>{if(usedWords.has(w)){e.preventDefault();return}e.dataTransfer.setData('text/plain',w);el.classList.add('dragging')});
+    el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+    bank.appendChild(el);
+  });
+
+  const qW=document.createElement('div');qW.style.cssText='display:flex;flex-direction:column;gap:12px;margin-top:14px';body.appendChild(qW);
+  const counter=document.createElement('div');counter.className='muted';counter.style.fontSize='14px';qW.appendChild(counter);
+  const sentEl=document.createElement('div');sentEl.className='sentence-row';qW.appendChild(sentEl);
+
+  function render(){
+    sentEl.innerHTML="";const s=sentences[idx];const parts=s.text.split('___');
+    parts.forEach((p,i)=>{
+      const sp=document.createElement('span');sp.textContent=p;sentEl.appendChild(sp);
+      if(i<parts.length-1){
+        const dz=document.createElement('span');dz.className='drop-zone';dz.textContent="…";
+        dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
+        dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+        dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');const w=e.dataTransfer.getData('text/plain');if(w){dz.textContent=w;dz.classList.add('filled');dz.dataset.word=w}});
+        sentEl.appendChild(dz);
+      }
+    });
+  }
+
+  function markUsed(w){
+    usedWords.add(w);
+    bank.querySelectorAll('.bank-word').forEach(el=>{if(el.dataset.word===w)el.classList.add('used')});
+  }
+
+  function collectAnswer(){
+    const dz=sentEl.querySelector('.drop-zone');
+    return(dz&&dz.dataset.word)?dz.dataset.word:null;
+  }
+
+  function show(){
+    if(idx>=sentences.length){finishTask(results);return}
+    const s=sentences[idx];
+    counter.textContent=`Предложение ${idx+1} из ${sentences.length}`;
+    render();
+    document.getElementById('task-progress').style.width=((state.currentTask+idx/sentences.length)/TASKS.length*100)+"%";
+    startTimer(task.perItem,()=>{
+      const ua=collectAnswer();
+      if(ua&&norm(ua)===norm(s.answer))markUsed(ua);
+      results.push({question:s.text,userAnswer:ua||"(время вышло)",correctAnswer:s.answer,isCorrect:!!ua&&norm(ua)===norm(s.answer),rule:""});
+      idx++;show();
+    });
+  }
+
+  const btn=document.createElement('button');btn.className='btn';btn.textContent='Ответить';act.appendChild(btn);
+  btn.addEventListener('click',()=>{
+    stopTimer();const s=sentences[idx];const ua=collectAnswer();
+    if(ua&&norm(ua)===norm(s.answer))markUsed(ua);
+    results.push({question:s.text,userAnswer:ua||"(пусто)",correctAnswer:s.answer,isCorrect:!!ua&&norm(ua)===norm(s.answer),rule:""});
+    idx++;show();
+  });
+  show();
+}
+
+/* ================================================================
+   2.1 / 2.3 CHOICE
+   ================================================================ */
+
+function runChoice(task,body,act){
+  const data=task.data;let idx=0;const results=[];
+  const qW=document.createElement('div');qW.style.cssText='display:flex;flex-direction:column;gap:12px';body.appendChild(qW);
+  const counter=document.createElement('div');counter.className='muted';counter.style.fontSize='14px';qW.appendChild(counter);
+  const qText=document.createElement('div');qText.className='question-text';qW.appendChild(qText);
+  const choices=document.createElement('div');choices.className='choices';qW.appendChild(choices);
+
+  task.options.forEach(opt=>{
+    const b=document.createElement('button');b.className='choice-btn';b.textContent=opt;
+    b.addEventListener('click',()=>{
+      stopTimer();const item=data[idx];
+      results.push({question:item.text,userAnswer:opt,correctAnswer:item.answer,isCorrect:opt===item.answer,rule:item.rule||""});
+      idx++;show();
+    });
+    choices.appendChild(b);
+  });
+
+  function show(){
+    if(idx>=data.length){finishTask(results);return}
+    const item=data[idx];
+    counter.textContent=`Вопрос ${idx+1} из ${data.length}`;
+    qText.textContent=item.text;
+    document.getElementById('task-progress').style.width=((state.currentTask+idx/data.length)/TASKS.length*100)+"%";
+    startTimer(task.perItem,()=>{
+      results.push({question:item.text,userAnswer:"(время вышло)",correctAnswer:item.answer,isCorrect:false,rule:item.rule||""});
+      idx++;show();
+    });
+  }
+  show();
+}
+
+/* ================================================================
+   2.2 / 2.4 INPUT
+   ================================================================ */
+
+function runInput(task,body,act){
+  const data=task.data;let idx=0;const results=[];
+  const qW=document.createElement('div');qW.style.cssText='display:flex;flex-direction:column;gap:12px';body.appendChild(qW);
+  const counter=document.createElement('div');counter.className='muted';counter.style.fontSize='14px';qW.appendChild(counter);
+  const qText=document.createElement('div');qText.className='question-text';qW.appendChild(qText);
+  const input=document.createElement('input');input.type='text';input.className='text-input';input.autocomplete='off';input.spellcheck=false;
+  input.placeholder=task.id.startsWith("2.2")?"some или any":"a / an / the / —";
+  qW.appendChild(input);
+  const btn=document.createElement('button');btn.className='btn';btn.textContent='Ответить';act.appendChild(btn);
+
+  function normAns(s){
+    let v=(s||"").trim().toLowerCase();
+    if(v==="-"||v==="—"||v==="–"||v==="без"||v==="нет"||v==="none"||v==="0")v="—";
+    return v;
+  }
+
+  function submit(){
+    stopTimer();const item=data[idx];const raw=input.value.trim()||"(пусто)";
+    results.push({question:item.text,userAnswer:raw,correctAnswer:item.answer,isCorrect:normAns(input.value)===item.answer,rule:item.rule||""});
+    idx++;show();
+  }
+  btn.addEventListener('click',submit);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
+
+  function show(){
+    if(idx>=data.length){finishTask(results);return}
+    const item=data[idx];
+    counter.textContent=`Вопрос ${idx+1} из ${data.length}`;
+    qText.textContent=item.text;input.value="";input.focus();
+    document.getElementById('task-progress').style.width=((state.currentTask+idx/data.length)/TASKS.length*100)+"%";
+    startTimer(task.perItem,()=>{
+      results.push({question:item.text,userAnswer:"(время вышло)",correctAnswer:item.answer,isCorrect:false,rule:item.rule||""});
+      idx++;show();
+    });
+  }
+  show();
+}
+
+/* ================================================================
+   REVIEW
+   ================================================================ */
+
+function showReview(task,results){
+  showScreen('screen-review');
+  document.getElementById('review-title').textContent=task.title+" — разбор";
+  const c=results.filter(r=>r.isCorrect).length;
+  document.getElementById('review-subtitle').textContent=`Правильных ответов: ${c} из ${results.length}`;
+  const list=document.getElementById('review-list');list.innerHTML="";
+  results.forEach((r,i)=>{
+    const item=document.createElement('div');item.className='review-item '+(r.isCorrect?'correct':'wrong');
+    const q=document.createElement('div');q.className='q';q.textContent=(i+1)+". "+r.question;item.appendChild(q);
+    const a=document.createElement('div');a.className='a';
+    if(r.isCorrect){
+      a.innerHTML=SVG_CHECK+' <span class="correct-ans">'+esc(r.correctAnswer)+'</span> — верно';
+    }else{
+      a.innerHTML=SVG_CROSS+' <span class="your-ans-wrong">'+esc(r.userAnswer)+'</span> → правильный ответ: <span class="correct-ans">'+esc(r.correctAnswer)+'</span>';
+    }
+    item.appendChild(a);
+    if(r.rule){const rl=document.createElement('div');rl.className='rule';rl.textContent=r.rule;item.appendChild(rl)}
+    list.appendChild(item);
+  });
+}
+
+/* ================================================================
+   FINAL STATS
+   ================================================================ */
+
+function showFinal(){
+  showScreen('screen-final');
+  const grid=document.getElementById('stats-grid');grid.innerHTML="";
+  function addRow(label,c,t,cls){
+    const r=document.createElement('div');r.className='stat-row'+(cls?' '+cls:'');
+    r.innerHTML='<span class="label">'+label+'</span><span class="value">'+c+' / '+t+'</span>';
+    grid.appendChild(r);
+  }
+  let vc=0,va=0;
+  ["1.1","1.2","1.3"].forEach(id=>{
+    const rs=state.results[id]||[];const c=rs.filter(r=>r.isCorrect).length;vc+=c;va+=rs.length;
+    addRow(TASKS.find(t=>t.id===id).title,c,rs.length);
+  });
+  addRow('<strong>Блок 1 — Лексика</strong>',vc,va,'total');
+
+  let gc=0,ga=0;
+  ["2.1","2.2","2.3","2.4"].forEach(id=>{
+    const rs=state.results[id]||[];const c=rs.filter(r=>r.isCorrect).length;gc+=c;ga+=rs.length;
+    addRow(TASKS.find(t=>t.id===id).title,c,rs.length);
+  });
+  addRow('<strong>Блок 2 — Грамматика</strong>',gc,ga,'total');
+  addRow('<strong>ИТОГО</strong>',vc+gc,va+ga,'grand');
+}
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+
+document.getElementById('btn-start').addEventListener('click',()=>{showScreen('screen-task');startTask(0)});
+document.getElementById('btn-next-task').addEventListener('click',()=>{
+  const next=state.currentTask+1;
+  if(next>=TASKS.length)showFinal();
+  else{showScreen('screen-task');startTask(next)}
+});
+
+window.addEventListener('beforeunload',e=>{
+  if(state.currentTask>=0&&state.currentTask<TASKS.length){e.preventDefault();e.returnValue=""}
+});
+</script>
+</body>
+</html>
