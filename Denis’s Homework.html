@@ -1,0 +1,480 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>Denis’s Homework</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F2F4F9;--surface:#FFFFFF;--ink:#1D2540;--muted:#5D6785;--line:#DCE1EC;
+  --accent:#F28C28;--accent-ink:#9A4F07;--chip:#FFF1E2;
+  --teal:#138A78;--teal-soft:#DDF3EE;--bad:#D93D42;--bad-soft:#FDE6E6;
+  --stage:#E9EEF6;--wall:#E6EDF6;--floor:#DCCBAE;--skirt:#C8B38F;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#11151E;--surface:#1A202D;--ink:#EAEEF7;--muted:#9BA4BC;--line:#2B3345;
+    --accent:#F59A42;--accent-ink:#FFC58A;--chip:#3A2A18;
+    --teal:#3CC7AE;--teal-soft:#16372F;--bad:#FF6B6F;--bad-soft:#3A1D20;
+    --stage:#222A3B;--wall:#2A3550;--floor:#5A4A36;--skirt:#6E5B42;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#11151E;--surface:#1A202D;--ink:#EAEEF7;--muted:#9BA4BC;--line:#2B3345;
+  --accent:#F59A42;--accent-ink:#FFC58A;--chip:#3A2A18;
+  --teal:#3CC7AE;--teal-soft:#16372F;--bad:#FF6B6F;--bad-soft:#3A1D20;
+  --stage:#222A3B;--wall:#2A3550;--floor:#5A4A36;--skirt:#6E5B42;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 "Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;margin:0}
+h1,h2,h3{font-family:"Bricolage Grotesque","Figtree",system-ui,sans-serif;line-height:1.1;margin:0;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,select:focus-visible,input:focus-visible,.card-flip:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+svg{display:block;width:100%;height:auto}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar-t{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:18px}
+.prog{font-size:13.5px;font-weight:700;color:var(--muted);display:flex;gap:8px;align-items:center;font-variant-numeric:tabular-nums}
+.prog b{background:var(--chip);color:var(--accent-ink);border-radius:999px;padding:4px 11px}
+
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:0 80px}
+.hello{padding-block:40px 8px}
+.hello h1{font-size:clamp(46px,8vw,82px);font-weight:800;letter-spacing:-.02em}
+.hello h1 em{font-style:normal;color:var(--accent)}
+.note{margin-top:18px;background:var(--chip);border-radius:18px;padding:16px 18px;display:grid;gap:6px;max-width:680px}
+.note p{margin:0;font-weight:600}
+.note p:first-child{color:var(--accent-ink);font-weight:700}
+
+.part{margin-top:56px;padding-top:12px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.part span{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.part b{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:22px}
+.ru{color:var(--muted);font-size:15px;margin:12px 0 4px;max-width:72ch}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:6px;background:var(--chip);color:var(--accent-ink);margin-bottom:8px}
+.block{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:18px}
+.block h3{font-size:23px;font-weight:800;margin-bottom:4px}
+.bl-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.bl-head p{margin:2px 0 0;color:var(--muted);max-width:64ch}
+.gloss{margin-top:6px!important;font-size:14px;background:var(--chip);color:var(--ink)!important;border-radius:10px;padding:6px 10px;display:inline-block}
+.score{font-size:13px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:4px}
+.stage{background:var(--stage);border-radius:18px;padding:10px}
+.two{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;align-items:start}
+
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.card-flip{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:10px 10px 14px;text-align:left;display:flex;flex-direction:column;gap:6px}
+.card-flip:hover{border-color:var(--accent)}
+.card-flip .pic{background:var(--stage);border-radius:12px;padding:4px}
+.card-flip .w{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:24px;line-height:1}
+.card-flip .tr{font-size:14px;color:var(--muted)}
+.card-flip .ex{font-size:14px;font-weight:600;border-top:1px dashed var(--line);padding-top:6px}
+.card-flip .hint{font-size:12px;color:var(--muted)}
+
+.mc{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:q}
+.mc li{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:8px;counter-increment:q}
+.mc .s{font-weight:600}
+.mc .s::before{content:counter(q) ". ";color:var(--muted);font-weight:700}
+.blank{display:inline-block;min-width:3em;border-bottom:2.5px solid var(--accent);text-align:center;color:var(--accent-ink);font-weight:700}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:6px 13px;font-weight:700;font-size:14.5px;text-align:left}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--teal-soft);border-color:var(--teal);color:var(--teal)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.opt.missed{border-color:var(--teal);border-style:dashed;color:var(--teal)}
+li.ok,.pcard.ok{background:color-mix(in srgb,var(--teal-soft) 45%,transparent)}
+li.bad,.pcard.bad{background:color-mix(in srgb,var(--bad-soft) 45%,transparent)}
+.why{font-size:14px;color:var(--muted)}
+.why b{color:var(--teal)}
+
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.pcard{border:1px solid var(--line);border-radius:16px;padding:8px 10px 12px;display:flex;flex-direction:column;gap:8px}
+.pcard .pic{background:var(--stage);border-radius:12px;padding:4px}
+.pcard .opt{font-size:13.5px;padding:5px 10px}
+
+.pics3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pbtn{border:2.5px solid transparent;background:var(--stage);border-radius:14px;padding:4px;position:relative}
+.pbtn:hover:not(:disabled){border-color:var(--accent)}
+.pbtn:disabled{cursor:default}
+.pbtn.right{border-color:var(--teal)}
+.pbtn.wrong{border-color:var(--bad)}
+.pbtn.missed{border-color:var(--teal);border-style:dashed}
+.pbtn i{position:absolute;top:6px;left:8px;font-style:normal;font-weight:800;font-size:13px;background:var(--surface);border-radius:6px;padding:0 6px}
+
+.scr{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:q}
+.scr li{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:10px;counter-increment:q}
+.scr .top{font-weight:600}
+.scr .top::before{content:counter(q) ". ";color:var(--muted);font-weight:700}
+.ans{min-height:46px;border:2px dashed var(--line);border-radius:12px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:5px 11px;font-weight:700;box-shadow:0 2px 0 var(--line)}
+.tile:hover:not(:disabled){border-color:var(--accent)}
+.tile:disabled{cursor:default}
+.ans .tile{background:var(--chip);border-color:transparent;box-shadow:none}
+.scr li.ok .ans{border-style:solid;border-color:var(--teal)}
+.scr li.bad .ans{border-style:solid;border-color:var(--bad)}
+.btn{border:none;background:var(--ink);color:var(--surface);font-weight:700;padding:8px 16px;border-radius:11px}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.fb{font-weight:600;font-size:14px}
+.fb.ok{color:var(--teal)}.fb.no{color:var(--bad)}
+
+.tw{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:q}
+.tw li{border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:600;line-height:2.2;counter-increment:q}
+.tw li::before{content:counter(q) ". ";color:var(--muted);font-weight:700}
+.tw input{font:inherit;font-weight:700;width:9em;max-width:100%;padding:2px 8px;border-radius:9px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+.tw li.ok input{border-color:var(--teal);color:var(--teal)}
+.tw li.bad input{border-color:var(--bad);color:var(--bad)}
+.tw .chk{border:1.5px solid var(--line);background:var(--surface);border-radius:9px;padding:2px 10px;font-weight:700;font-size:13.5px;margin-left:6px}
+.tw .res-a{font-weight:700;margin-left:6px}
+.tw li.ok .res-a{color:var(--teal)}
+.tw li.bad .res-a{color:var(--bad)}
+
+.results{margin-top:48px;background:var(--ink);color:var(--surface);border-radius:26px;padding:26px}
+.results h2{font-size:clamp(30px,5vw,44px);font-weight:800}
+.results .sub{opacity:.75;margin:6px 0 18px}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.res{background:color-mix(in srgb,var(--surface) 10%,transparent);border-radius:16px;padding:12px 14px}
+.res .n{font-family:"Bricolage Grotesque",sans-serif;font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.res .l{font-size:13px;opacity:.8;font-weight:600}
+.total{margin-top:16px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.total .n{font-family:"Bricolage Grotesque",sans-serif;font-size:64px;font-weight:800;line-height:1;color:var(--accent)}
+.total .p{font-size:20px;font-weight:700}
+.status{margin-top:12px;font-weight:600;opacity:.85}
+@media (max-width:760px){ .two{grid-template-columns:1fr} }
+</style>
+<style>
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
+.rule{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:18px;padding:14px 16px;font-size:15px}
+.rule b.h{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:20px;margin-bottom:4px}
+.rule i{color:var(--muted)}
+.rule.t{border-top-color:var(--teal)}
+.rule.p{border-top-color:#9B6FC0}
+.tp{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px}
+.tp-h{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:24px}
+.tp-sub{margin:4px 0 14px;color:var(--muted)}
+.tp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.tp-col{border-radius:18px;padding:14px;background:var(--cs);border:1.5px solid var(--cc);display:grid;gap:8px;align-content:start}
+.tp-col .tp-t{font-family:"Bricolage Grotesque",sans-serif;font-size:19px;color:var(--cc)}
+.tp-col>div{background:var(--surface);border-radius:12px;padding:8px 11px;font-size:14.5px}
+.tp-col>div i{display:block;color:var(--muted);font-size:13.5px}
+.tp-col>div.x{background:transparent;border:1.5px dashed var(--cc)}
+.c-at{--cc:#C8654A;--cs:#FBEAE4}.c-on{--cc:#9B6FC0;--cs:#F2EAF8}.c-in{--cc:#5E8A3A;--cs:#E9F1E4}
+:root[data-theme="dark"] .c-at{--cs:#3A241D}:root[data-theme="dark"] .c-on{--cs:#2E2338}:root[data-theme="dark"] .c-in{--cs:#223020}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .c-at{--cs:#3A241D}:root:not([data-theme="light"]) .c-on{--cs:#2E2338}:root:not([data-theme="light"]) .c-in{--cs:#223020}}
+.tp-secret{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tp-note{grid-column:1 / -1;background:var(--chip);border-radius:14px;padding:10px 14px}
+.tp-bad,.tp-good{border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700;line-height:1.8}
+.tp-bad{color:var(--bad)}.tp-good{color:var(--teal)}
+</style>
+
+<div class="bar"><div class="bar-in">
+  <div class="bar-t">Домашнее задание</div>
+  <div class="prog">Сделано <b id="topProg">0</b></div>
+</div></div>
+
+<main class="wrap">
+<header class="hello">
+  <h1>Hello, <em>Денис!</em></h1>
+  <div class="note">
+    <p>Не перезагружай эту страницу, иначе ответы сбросятся.</p>
+    <p>После завершения домашней работы пришли мне в MAX скрин с результатами.</p>
+  </div>
+</header>
+
+<div class="part"><span>Часть 1</span><b>Слова</b></div>
+<p class="ru">В каждом задании ответить можно только один раз — подумай, прежде чем нажать.</p>
+
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 1</span><h3>Что это?</h3><p>Посмотри на картинку и выбери слово.</p></div><span class="score" id="sc1"></span></div><div class="pcards" id="ex1"></div></div>
+
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 2</span><h3>Кто это?</h3><p>Посмотри на людей A, B, C, D и ответь на вопросы.</p><p class="gloss">Who is…? — Кто…? · Who has…? — У кого есть…?</p></div><span class="score" id="sc2"></span></div>
+  <div class="stage" id="people" style="max-width:640px"></div>
+  <ol class="mc" id="ex2" style="margin-top:14px"></ol></div>
+
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 3</span><h3>Переведи на английский</h3></div><span class="score" id="sc3"></span></div><ol class="mc" id="ex3"></ol></div>
+
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 4</span><h3>Противоположности</h3><p>Выбери слово с противоположным значением.</p></div><span class="score" id="sc4"></span></div><ol class="mc" id="ex4"></ol></div>
+
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 5</span><h3>Напиши по-английски</h3><p>Напиши слово и нажми «Проверить». Первая буква — подсказка. Одна попытка!</p></div><span class="score" id="sc5"></span></div><ol class="tw" id="ex5"></ol></div>
+
+
+<div class="part"><span>Часть 2</span><b>Грамматика</b></div>
+
+<div class="rules">
+  <div class="rule"><b class="h">Артикли</b>1. Первый раз → <b>a / an</b>, второй раз → <b>the</b>.<br><i>I have a dog. The dog is big.</i><br>2. Один в мире / в ситуации → <b>the</b>.<br><i>the sun, the moon</i><br>3. В целом (мн. число / неисчисляемое) → <b>без артикля</b>.<br><i>I like cats. I eat meat.</i></div>
+  <div class="rule t"><b class="h">some / any</b><b>some</b> — в утвердительных предложениях (+).<br><i>There is some meat in the fridge.</i><br><b>some</b> — в просьбах и предложениях (даже если это вопрос!).<br><i>Can I have some water, please? Would you like some tea?</i><br><b>any</b> — в отрицаниях (−) и обычных вопросах (?).<br><i>I don’t have any plates. Do you have any milk?</i></div>
+</div>
+
+<div class="tp">
+  <b class="tp-h">Предлоги времени: AT → ON → IN</b>
+  <p class="tp-sub">От самого маленького промежутка времени к самому большому — по порядку.</p>
+  <div class="tp-grid">
+    <div class="tp-col c-at"><b class="tp-t">AT — точный момент</b>
+      <div><b>Точное время</b><i>at 5 o’clock, at 9 a.m., at half past six</i></div>
+      <div><b>Особые моменты дня</b><i>at noon (в полдень), at midnight (в полночь), at sunset, at bedtime</i></div>
+      <div class="x"><b>night — всегда с AT!</b><i>at night (ночью) — не “in the night”</i></div>
+      <div><b>at the weekend</b> — британский вариант<i>I’ll see you at the weekend.</i></div>
+      <div><b>Праздники</b><i>at Christmas, at Easter, at New Year</i></div>
+    </div>
+    <div class="tp-col c-on"><b class="tp-t">ON — один день</b>
+      <div><b>Дни недели</b><i>on Monday, on Fridays (по пятницам)</i></div>
+      <div><b>Даты</b><i>on 5th May, on the 1st of June</i></div>
+      <div><b>Праздник + Day / Eve</b><i>on Christmas Day, on New Year’s Eve, on Valentine’s Day</i></div>
+      <div><b>on my birthday</b><i>on her birthday</i></div>
+      <div class="x"><b>День + часть дня → ON!</b><i>on Monday morning, on Friday night</i></div>
+      <div><b>on the weekend</b> — американский вариант</div>
+    </div>
+    <div class="tp-col c-in"><b class="tp-t">IN — длинные периоды</b>
+      <div><b>Месяцы</b><i>in June, in December</i></div>
+      <div><b>Годы</b><i>in 2020, in 1995</i></div>
+      <div><b>Времена года</b><i>in summer, in winter</i></div>
+      <div class="x"><b>Части суток — всегда с “the”</b><i>in the morning, in the afternoon, in the evening</i></div>
+      <div><b>Века и десятилетия</b><i>in the 19th century, in the 1990s</i></div>
+    </div>
+  </div>
+  <div class="tp-secret">
+    <div class="tp-note">★ <b>Секрет: last / next / this / every</b> — перед этими словами предлог <b>не нужен</b>.</div>
+    <div class="tp-bad">✗ in last summer<br>✗ on next Monday<br>✗ at this morning<br>✗ on every Friday</div>
+    <div class="tp-good">✓ last summer<br>✓ next Monday<br>✓ this morning<br>✓ every Friday</div>
+  </div>
+</div>
+
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 6</span><h3>Артикли</h3><p>Выбери a / an, the или — (без артикля).</p></div><span class="score" id="sc7"></span></div><ol class="mc" id="ex7"></ol></div>
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 7</span><h3>some или any?</h3></div><span class="score" id="sc8"></span></div><ol class="mc" id="ex8"></ol></div>
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 8</span><h3>at, on или in?</h3><p>Выбери предлог. «—» значит, что предлог не нужен.</p></div><span class="score" id="sc9"></span></div><ol class="mc" id="ex9"></ol></div>
+<div class="block"><div class="bl-head"><div><span class="tag">Задание 9</span><h3>Собери предложение</h3><p>Нажимай на слова по порядку. Нажми на слово в ответе, чтобы вернуть его. Проверить можно один раз.</p></div><span class="score" id="sc10"></span></div><ol class="scr" id="ex10"></ol></div>
+
+<section class="results">
+  <h2>Результаты Дениса</h2>
+  <p class="sub">Сделай скрин этого блока и пришли мне в MAX.</p>
+  <div class="res-grid" id="resGrid"></div>
+  <div class="total"><span class="n" id="rTot"></span><span class="p" id="rPct"></span></div>
+  <div class="status" id="rStatus"></div>
+</section>
+</main>
+
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sv = (inner, vb = '0 0 120 90') => `<svg viewBox="${vb}" role="img" aria-hidden="true">${inner}</svg>`;
+const INK = '#1D2540';
+
+const EX = { 1:'Что это?', 2:'Кто это?', 3:'Перевод', 4:'Противоположности', 5:'Напиши по-английски', 7:'Артикли', 8:'some / any', 9:'at / on / in', 10:'Собери предложение' };
+const TOTAL = {}, score = {}, done = {};
+Object.keys(EX).forEach(k => { score[k] = 0; done[k] = 0; });
+function refresh(){
+  let s = 0, d = 0, t = 0;
+  Object.keys(EX).forEach(k => { s += score[k]; d += done[k]; t += TOTAL[k] || 0; $('#sc' + k).textContent = `${score[k]} / ${TOTAL[k]}`; const r = $('#r' + k); if (r) r.textContent = `${score[k]} / ${TOTAL[k]}`; });
+  $('#topProg').textContent = `${d} / ${t}`; $('#rTot').textContent = `${s} / ${t}`;
+  $('#rPct').textContent = d ? `${Math.round(s / t * 100)}%` : '';
+  $('#rStatus').textContent = d === t ? '✓ Всё сделано!' : `Сделано ${d} из ${t} — продолжай!`;
+}
+window.addEventListener('beforeunload', e => { if (Object.values(done).some(Boolean)){ e.preventDefault(); e.returnValue = ''; } });
+const mark = (k, good) => { done[k]++; if (good) score[k]++; refresh(); };
+
+function mc(key, listId, items, fixed, shuffleItems){
+  TOTAL[key] = items.length;
+  let P = items.map(it => { if (fixed) return { ...it, opts: fixed, ans: it.a }; const opts = shuffle(it.o); return { ...it, opts, ans: opts.indexOf(it.o[0]) }; });
+  if (shuffleItems) P = shuffle(P);
+  const list = $(listId);
+  list.innerHTML = P.map((it, n) => `<li data-n="${n}"><div class="s">${it.s.replace('___', '<span class="blank">___</span>')}</div><div class="opts">${it.opts.map((x, k) => `<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div class="why" hidden></div></li>`).join('');
+  list.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled) return;
+    const li = b.closest('li'), it = P[+li.dataset.n], good = +b.dataset.k === it.ans;
+    li.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.k === it.ans && !good) x.classList.add('missed'); });
+    b.classList.add(good ? 'right' : 'wrong'); li.classList.add(good ? 'ok' : 'bad');
+    const bl = li.querySelector('.blank'); if (bl) bl.textContent = it.f ?? it.opts[it.ans];
+    if (it.why || !good){ const w = li.querySelector('.why'); w.hidden = false; w.innerHTML = (good ? '✓ ' : '✗ Правильно: <b>' + it.opts[it.ans] + '</b>. ') + (it.why || ''); }
+    mark(key, good);
+  });
+}
+
+/* ---------- pictures ---------- */
+const I = {
+  owl:`<ellipse cx="60" cy="52" rx="26" ry="32" fill="#9C6B45"/><ellipse cx="60" cy="60" rx="16" ry="20" fill="#E6C39A"/><path d="M38 26 L44 34 M82 26 L76 34" stroke="#7A5230" stroke-width="6" stroke-linecap="round"/><circle cx="49" cy="40" r="10" fill="#fff"/><circle cx="71" cy="40" r="10" fill="#fff"/><circle cx="49" cy="40" r="5" fill="${INK}"/><circle cx="71" cy="40" r="5" fill="${INK}"/><path d="M56 48 L60 56 L64 48Z" fill="#F2A33A"/><path d="M46 84 v4 M52 84 v4 M68 84 v4 M74 84 v4" stroke="#F2A33A" stroke-width="3"/><path d="M20 86 H100" stroke="#7A5230" stroke-width="4"/>`,
+  mirror:`<ellipse cx="60" cy="44" rx="26" ry="36" fill="#C9A227"/><ellipse cx="60" cy="44" rx="21" ry="31" fill="#DCEEF5"/><path d="M48 30 L60 20 M48 44 L68 26" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`,
+  microwave:`<rect x="16" y="20" width="88" height="54" rx="6" fill="#E6E9E8" stroke="${INK}" stroke-width="2.5"/><rect x="24" y="28" width="56" height="38" rx="3" fill="#3A3F47"/><circle cx="52" cy="47" r="10" fill="#F2C14E" opacity=".35"/><rect x="86" y="30" width="12" height="8" rx="2" fill="#138A78"/><g fill="${INK}"><circle cx="89" cy="48" r="2"/><circle cx="95" cy="48" r="2"/><circle cx="89" cy="56" r="2"/><circle cx="95" cy="56" r="2"/></g>`,
+  oven:`<rect x="18" y="10" width="84" height="74" rx="4" fill="#E6E9E8" stroke="${INK}" stroke-width="2.5"/><rect x="18" y="10" width="84" height="14" rx="4" fill="#C9CED0"/><g fill="${INK}"><circle cx="32" cy="17" r="3"/><circle cx="46" cy="17" r="3"/><circle cx="88" cy="17" r="3"/></g><rect x="28" y="32" width="64" height="44" rx="4" fill="#3A3F47"/><rect x="34" y="38" width="52" height="32" rx="3" fill="#E5484D" opacity=".5"/><ellipse cx="60" cy="60" rx="16" ry="5" fill="#C98A4B"/>`,
+  desk:`<rect x="14" y="36" width="92" height="8" rx="2" fill="#A06A40"/><rect x="18" y="44" width="6" height="40" fill="#7E5230"/><rect x="96" y="44" width="6" height="40" fill="#7E5230"/><rect x="70" y="44" width="30" height="24" fill="#B98150"/><circle cx="85" cy="56" r="2" fill="#F2C14E"/><rect x="30" y="20" width="30" height="16" rx="2" fill="${INK}"/><rect x="33" y="23" width="24" height="10" fill="#6F9BD1"/>`,
+  carpet:`<ellipse cx="60" cy="50" rx="50" ry="26" fill="#C0504D"/><ellipse cx="60" cy="50" rx="38" ry="18" fill="none" stroke="#F2C14E" stroke-width="3"/><ellipse cx="60" cy="50" rx="20" ry="9" fill="#E8907F"/>`,
+  stairs:`<path d="M10 84 H34 V66 H54 V48 H74 V30 H94 V12 H110 V84Z" fill="#B98150"/><path d="M10 84 H34 V66 H54 V48 H74 V30 H94 V12 H110" fill="none" stroke="#7A5230" stroke-width="3"/>`,
+  plate:`<ellipse cx="60" cy="50" rx="46" ry="26" fill="#fff" stroke="${INK}" stroke-width="2.5"/><ellipse cx="60" cy="50" rx="30" ry="16" fill="none" stroke="#C9CED8" stroke-width="2"/>`,
+  meat:`<ellipse cx="60" cy="80" rx="48" ry="6" fill="#C9CED8"/><g transform="rotate(-30 60 46)"><path d="M70 46 L96 46" stroke="#F4F1EA" stroke-width="9" stroke-linecap="round"/><circle cx="99" cy="41" r="6" fill="#F4F1EA"/><circle cx="99" cy="51" r="6" fill="#F4F1EA"/><path d="M18 46 C18 24 40 18 56 26 C66 31 74 38 76 46 C74 54 66 61 56 66 C40 74 18 68 18 46Z" fill="#B8642F"/><path d="M26 40 C30 30 42 27 52 31" stroke="#D98A4E" stroke-width="5" fill="none" stroke-linecap="round"/></g>`,
+  glasses:`<g fill="none" stroke="${INK}" stroke-width="5"><circle cx="38" cy="46" r="18"/><circle cx="82" cy="46" r="18"/><path d="M56 44 Q60 38 64 44 M20 42 L8 34 M100 42 L112 34"/></g>`,
+  beard:`<circle cx="60" cy="42" r="26" fill="#F2C9A5"/><path d="M34 40 Q34 80 60 84 Q86 80 86 40 Q80 56 60 58 Q40 56 34 40Z" fill="#5A3A22"/><path d="M36 30 Q40 14 60 14 Q80 14 84 30 Q72 22 60 22 Q48 22 36 30Z" fill="#5A3A22"/><circle cx="50" cy="38" r="3" fill="${INK}"/><circle cx="70" cy="38" r="3" fill="${INK}"/><path d="M52 62 Q60 66 68 62" stroke="#F2C9A5" stroke-width="3" fill="none"/>`,
+  moustache:`<circle cx="60" cy="44" r="28" fill="#F2C9A5"/><path d="M34 34 Q38 14 60 14 Q82 14 86 34 Q72 24 60 24 Q48 24 34 34Z" fill="#3A2A20"/><circle cx="50" cy="40" r="3" fill="${INK}"/><circle cx="70" cy="40" r="3" fill="${INK}"/><path d="M44 56 Q52 46 60 52 Q68 46 76 56 Q68 56 60 58 Q52 56 44 56Z" fill="#3A2A20"/><path d="M54 64 Q60 67 66 64" stroke="#B24A34" stroke-width="2.4" fill="none"/>`,
+  shower:`<path d="M30 10 H70 V22" stroke="#9AA7A4" stroke-width="5" fill="none"/><path d="M56 22 H84 L78 30 H62Z" fill="#9AA7A4"/><g fill="#6F9BD1"><circle cx="64" cy="40" r="2"/><circle cx="72" cy="42" r="2"/><circle cx="80" cy="40" r="2"/><circle cx="66" cy="52" r="2"/><circle cx="76" cy="56" r="2"/><circle cx="70" cy="66" r="2"/><circle cx="82" cy="62" r="2"/></g><rect x="14" y="74" width="92" height="10" rx="4" fill="#fff" stroke="${INK}" stroke-width="2"/>`,
+  laugh:`<circle cx="60" cy="45" r="34" fill="#F2C14E"/><path d="M42 36 Q48 30 54 36 M66 36 Q72 30 78 36" stroke="${INK}" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M38 50 Q60 82 82 50Z" fill="${INK}"/><path d="M46 62 Q60 72 74 62" fill="#E5677F"/><text x="104" y="22" font-family="Figtree,sans-serif" font-weight="800" font-size="14" fill="${INK}">ha!</text>`,
+  bark:`<g transform="translate(46 86) scale(.85)"><path d="M15 -8 C 30 -8, 32 -22, 26 -28" fill="none" stroke="#C98A4B" stroke-width="6" stroke-linecap="round"/><ellipse cx="0" cy="-18" rx="18" ry="19" fill="#C98A4B"/><circle cx="0" cy="-44" r="15" fill="#C98A4B"/><ellipse cx="-14" cy="-42" rx="6" ry="12" fill="#7A5230" transform="rotate(15 -14 -42)"/><ellipse cx="14" cy="-42" rx="6" ry="12" fill="#7A5230" transform="rotate(-15 14 -42)"/><ellipse cx="0" cy="-36" rx="8" ry="6.5" fill="#F6E3C8"/><ellipse cx="0" cy="-34" rx="5" ry="3" fill="${INK}"/><circle cx="-6" cy="-48" r="2.3" fill="${INK}"/><circle cx="6" cy="-48" r="2.3" fill="${INK}"/></g><path d="M70 22 H112 V46 H84 L76 54 V46 H70Z" fill="#fff" stroke="${INK}" stroke-width="2"/><text x="91" y="39" text-anchor="middle" font-family="Figtree,sans-serif" font-weight="800" font-size="12" fill="${INK}">Woof!</text>`,
+  wash:`<ellipse cx="60" cy="62" rx="46" ry="16" fill="#9AA7A4"/><ellipse cx="60" cy="58" rx="40" ry="12" fill="#BFE3F2"/><ellipse cx="54" cy="50" rx="22" ry="8" fill="#fff" stroke="${INK}" stroke-width="2"/><g fill="#fff" stroke="#9AB8C8"><circle cx="82" cy="46" r="6"/><circle cx="90" cy="38" r="4"/><circle cx="36" cy="44" r="5"/></g><rect x="70" y="20" width="22" height="12" rx="4" fill="#F2C14E" transform="rotate(-20 81 26)"/>`,
+  child:`<circle cx="60" cy="30" r="16" fill="#F2C9A5"/><path d="M44 28 Q46 12 60 12 Q74 12 76 28 Q68 20 60 20 Q52 20 44 28Z" fill="#F2D27A"/><circle cx="54" cy="30" r="2" fill="${INK}"/><circle cx="66" cy="30" r="2" fill="${INK}"/><path d="M54 37 Q60 41 66 37" stroke="#B24A34" stroke-width="2" fill="none"/><rect x="46" y="46" width="28" height="26" rx="8" fill="#E5484D"/><rect x="48" y="72" width="8" height="14" fill="#4C94B8"/><rect x="64" y="72" width="8" height="14" fill="#4C94B8"/><circle cx="96" cy="70" r="10" fill="#6F9BD1"/>`,
+  nature:`<rect width="120" height="90" rx="8" fill="#BFE0EE"/><path d="M0 70 L34 30 L58 56 L80 36 L120 74 V90 H0Z" fill="#8FA0B4"/><rect y="70" width="120" height="20" fill="#8FBF6A"/><rect x="20" y="52" width="6" height="22" fill="#7A5230"/><circle cx="23" cy="48" r="12" fill="#4E9A6A"/><circle cx="100" cy="18" r="9" fill="#F2C14E"/>`,
+  flat:`<rect x="30" y="8" width="60" height="78" fill="#CBD5E4" stroke="${INK}" stroke-width="2"/><g fill="#6F9BD1">${[14,32,50].map(y => [38,56,74].map(x => `<rect x="${x}" y="${y}" width="10" height="12"/>`).join('')).join('')}</g><rect x="72" y="50" width="12" height="12" fill="#F2C14E" stroke="#E5484D" stroke-width="2.5"/><rect x="52" y="68" width="16" height="18" fill="#8A5A36"/>`,
+};
+TOTAL[1] = 0;
+(function(){
+  const N = [
+    ['owl',['owl','bark','child']], ['mirror',['mirror','glasses','plate']], ['microwave',['microwave','oven','desk']], ['oven',['oven','microwave','stairs']],
+    ['desk',['desk','carpet','oven']], ['carpet',['carpet','plate','mirror']], ['stairs',['stairs','desk','flat']], ['plate',['plate','mirror','carpet']],
+    ['meat',['meat','plate','owl']], ['glasses',['glasses','mirror','beard']], ['beard',['beard','moustache','glasses']], ['moustache',['moustache','beard','bald']],
+    ['shower',['take a shower','wash','laugh']], ['laugh',['laugh','bark','wash']], ['bark',['bark','laugh','owl']], ['wash',['wash','take a shower','bark']],
+    ['child',['child','adult','old']], ['nature',['nature','flat','childhood']], ['flat',['flat','stairs','nature']],
+  ];
+  TOTAL[1] = N.length;
+  const P = N.map(([k, o]) => { const opts = shuffle(o); return { k, opts, ans: opts.indexOf(o[0]) }; });
+  $('#ex1').innerHTML = P.map((it, n) => `<div class="pcard" data-n="${n}"><div class="pic">${sv(I[it.k])}</div><div class="opts">${it.opts.map((x, i) => `<button class="opt" data-k="${i}">${x}</button>`).join('')}</div></div>`).join('');
+  $('#ex1').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled) return; const c = b.closest('.pcard'), it = P[+c.dataset.n], good = +b.dataset.k === it.ans;
+    c.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.k === it.ans && !good) x.classList.add('missed'); });
+    b.classList.add(good ? 'right' : 'wrong'); c.classList.add(good ? 'ok' : 'bad'); mark(1, good);
+  });
+})();
+
+/* ---------- people ---------- */
+function body(x, o){
+  const h = o.h, w = o.w, top = 270 - h, skin = '#F2C9A5', hy = top + 22;
+  let hair = '';
+  if (o.style === 'short') hair = `<path d="M${x-17} ${hy-2} Q${x-17} ${hy-24} ${x} ${hy-24} Q${x+17} ${hy-24} ${x+17} ${hy-2} Q${x+8} ${hy-14} ${x} ${hy-14} Q${x-8} ${hy-14} ${x-17} ${hy-2}Z" fill="${o.hc}"/>`;
+  if (o.style === 'bald') hair = `<path d="M${x-19} ${hy+2} Q${x-20} ${hy-6} ${x-16} ${hy-8} L${x-15} ${hy+6}Z M${x+19} ${hy+2} Q${x+20} ${hy-6} ${x+16} ${hy-8} L${x+15} ${hy+6}Z" fill="#C9CED0"/>`;
+  if (o.style === 'curly') hair = `<g fill="${o.hc}">${[[-18,-12],[-10,-22],[0,-26],[10,-22],[18,-12],[-22,2],[22,2],[-22,16],[22,16],[-18,28],[18,28]].map(([dx,dy]) => `<circle cx="${x+dx}" cy="${hy+dy}" r="8"/>`).join('')}</g>`;
+  if (o.style === 'straight') hair = `<path d="M${x-18} ${hy+20} V${hy-6} Q${x-18} ${hy-24} ${x} ${hy-24} Q${x+18} ${hy-24} ${x+18} ${hy-6} V${hy+20} H${x+12} V${hy-6} Q${x} ${hy-14} ${x-12} ${hy-6} V${hy+20}Z" fill="${o.hc}"/>`;
+  const beard = o.beard ? `<path d="M${x-15} ${hy+2} Q${x-14} ${hy+22} ${x} ${hy+24} Q${x+14} ${hy+22} ${x+15} ${hy+2} Q${x+8} ${hy+10} ${x} ${hy+10} Q${x-8} ${hy+10} ${x-15} ${hy+2}Z" fill="${o.hc}"/>` : '';
+  const mo = o.moustache ? `<path d="M${x-8} ${hy+8} Q${x-4} ${hy+3} ${x} ${hy+6} Q${x+4} ${hy+3} ${x+8} ${hy+8} Q${x} ${hy+9} ${x-8} ${hy+8}Z" fill="#9AA0A6"/>` : '';
+  const gl = o.glasses ? `<g fill="none" stroke="${INK}" stroke-width="1.8"><circle cx="${x-6}" cy="${hy-1}" r="5"/><circle cx="${x+6}" cy="${hy-1}" r="5"/><path d="M${x-1} ${hy-1} H${x+1}"/></g>` : '';
+  const eye = o.eye || INK;
+  return `<g>${o.style === 'curly' || o.style === 'straight' ? hair : ''}
+    <rect x="${x - w/2}" y="${top+44}" width="${w}" height="${h*0.42}" rx="${w/3}" fill="${o.shirt}"/>
+    <rect x="${x - w/2 + 4}" y="${top+40+h*0.4}" width="${w/2-6}" height="${270-(top+40+h*0.4)}" fill="#3A4256"/><rect x="${x+2}" y="${top+40+h*0.4}" width="${w/2-6}" height="${270-(top+40+h*0.4)}" fill="#3A4256"/>
+    <rect x="${x-5}" y="${hy+14}" width="10" height="10" fill="${skin}"/>
+    <ellipse cx="${x}" cy="${hy}" rx="15" ry="18" fill="${skin}"/>
+    ${o.style === 'short' || o.style === 'bald' ? hair : ''}${beard}
+    <circle cx="${x-6}" cy="${hy-1}" r="2.2" fill="${eye}"/><circle cx="${x+6}" cy="${hy-1}" r="2.2" fill="${eye}"/>
+    ${o.beard ? '' : `<path d="M${x-5} ${hy+10} Q${x} ${hy+13} ${x+5} ${hy+10}" stroke="#B24A34" stroke-width="1.8" fill="none"/>`}${mo}${gl}
+    <text x="${x}" y="292" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="22" fill="${INK}">${o.l}</text></g>`;
+}
+$('#people').innerHTML = sv(`<rect y="270" width="480" height="4" fill="var(--line)"/>` +
+  body(70, { l:'A', h:240, w:44, style:'short', hc:'#2A2A2A', beard:true, shirt:'#138A78' }) +
+  body(190, { l:'B', h:160, w:72, style:'bald', glasses:true, moustache:true, shirt:'#C0504D' }) +
+  body(310, { l:'C', h:200, w:52, style:'curly', hc:'#D2602A', eye:'#3E9A57', shirt:'#9B6FC0' }) +
+  body(420, { l:'D', h:130, w:40, style:'straight', hc:'#F2D27A', eye:'#3B82F6', shirt:'#F28C28' }), '0 0 480 300');
+mc(2, '#ex2', [
+  { s:'Who is tall?', a:0 }, { s:'Who is bald?', a:1 }, { s:'Who has red hair?', a:2 }, { s:'Who is a child?', a:3 },
+  { s:'Who has a beard?', a:0 }, { s:'Who is chubby?', a:1 }, { s:'Who has curly hair?', a:2 }, { s:'Who has blond hair?', a:3 },
+  { s:'Who has glasses and a moustache?', a:1 }, { s:'Who is middle-aged and medium height?', a:2 }, { s:'Who has blue eyes?', a:3 }, { s:'Who is short and old?', a:1 },
+], ['A','B','C','D'], true);
+
+/* ---------- Ex3 translation ---------- */
+mc(3, '#ex3', [
+  { s:'привычка', o:['habit','childhood','nature'] }, { s:'редко', o:['rarely','full','tall'] }, { s:'природа', o:['nature','habit','flat'] },
+  { s:'детство', o:['childhood','child','adult'] }, { s:'уютный', o:['cosy','full','slim'] }, { s:'мыть', o:['wash','laugh','bark'] },
+  { s:'полный (стакан полный)', o:['full','chubby','tall'] }, { s:'взрослый', o:['adult','child','young'] }, { s:'смеяться', o:['laugh','bark','wash'] },
+  { s:'лаять', o:['bark','laugh','owl'] }, { s:'стройный', o:['slim','short','bald'] }, { s:'среднего роста', o:['medium height','medium built','middle-aged'] },
+  { s:'среднего телосложения', o:['medium built','medium height','middle-aged'] }, { s:'средних лет', o:['middle-aged','medium height','old'] },
+  { s:'кудрявые волосы', o:['curly hair','straight hair','short hair'] }, { s:'зелёные глаза', o:['green eyes','blue eyes','red hair'] },
+  { s:'принять душ', o:['take a shower','wash a plate','laugh'] },
+]);
+
+/* ---------- Ex4 opposites ---------- */
+mc(4, '#ex4', [
+  { s:'tall ↔ ___', o:['short','slim','full'] }, { s:'young ↔ ___', o:['old','tall','cosy'] }, { s:'child ↔ ___', o:['adult','owl','habit'] },
+  { s:'long hair ↔ ___', o:['short hair','red hair','curly hair'] }, { s:'curly hair ↔ ___', o:['straight hair','long hair','blond hair'] },
+  { s:'slim ↔ ___', o:['chubby','tall','young'] }, { s:'above ↔ ___', o:['under','next to','between'] }, { s:'in front of ↔ ___', o:['behind','above','next to'] },
+]);
+
+/* ---------- Ex5 typing ---------- */
+(function(){
+  const T = [['сова','owl'],['зеркало','mirror'],['ковёр','carpet'],['лестница','stairs'],['тарелка','plate'],['мясо','meat'],['борода','beard'],['очки','glasses'],
+             ['детство','childhood'],['привычка','habit'],['уютный','cosy'],['ребёнок','child'],['квартира','flat'],['стол (письменный)','desk'],['духовка','oven'],['усы','moustache']];
+  TOTAL[5] = T.length;
+  $('#ex5').innerHTML = T.map(([r, e], n) => `<li data-n="${n}">${r} → <input id="w${n}" autocomplete="off" spellcheck="false" placeholder="${e[0]}…" aria-label="${r}"><button class="chk">Проверить</button><span class="res-a" hidden></span></li>`).join('');
+  function check(li){
+    const n = +li.dataset.n, inp = li.querySelector('input'); if (!inp.value.trim() || inp.disabled) return;
+    const v = inp.value.trim().toLowerCase(), want = T[n][1], good = v === want || (want === 'cosy' && v === 'cozy');
+    inp.disabled = true; li.querySelector('.chk').remove(); li.classList.add(good ? 'ok' : 'bad');
+    const a = li.querySelector('.res-a'); a.hidden = false; a.textContent = good ? '✓' : `✗ → ${want}`; mark(5, good);
+  }
+  $('#ex5').addEventListener('click', e => { if (e.target.classList.contains('chk')) check(e.target.closest('li')); });
+  $('#ex5').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.tagName === 'INPUT') check(e.target.closest('li')); });
+})();
+
+/* ---------- Grammar ---------- */
+const ART = ['a / an','the','—'];
+mc(7, '#ex7', [
+  { s:'I have ___ owl. The owl is very old.', a:0, f:'an', why:'Первый раз → an (owl начинается с гласной).' },
+  { s:'I have an owl. ___ owl is very old.', a:1, f:'The', why:'Второй раз → the.' },
+  { s:'I don’t eat ___ meat.', a:2, f:'—', why:'Мясо вообще → без артикля.' },
+  { s:'Look at ___ sun!', a:1, f:'the', why:'Солнце одно → the.' },
+  { s:'There is ___ mirror in my bathroom.', a:0, f:'a', why:'Первый раз → a.' },
+  { s:'___ children laugh a lot.', a:2, f:'—', why:'Дети вообще → без артикля.' },
+  { s:'I bought a carpet. ___ carpet is red.', a:1, f:'The', why:'Второй раз → the.' },
+  { s:'I love ___ nature.', a:2, f:'—', why:'Природа вообще → без артикля.' },
+  { s:'We have ___ microwave and an oven.', a:0, f:'a', why:'Первый раз → a.' },
+  { s:'Dogs bark at ___ moon.', a:1, f:'the', why:'Луна одна → the.' },
+], ART);
+mc(8, '#ex8', [
+  { s:'There is ___ meat in the fridge.', a:0, why:'Утвердительное (+) → some.' },
+  { s:'Are there ___ plates on the table?', a:1, why:'Вопрос (?) → any.' },
+  { s:'I don’t have ___ habits like that.', a:1, why:'Отрицание (−) → any.' },
+  { s:'I have ___ photos from my childhood.', a:0, why:'(+) → some.' },
+  { s:'Is there ___ milk?', a:1, why:'(?) → any.' },
+  { s:'There aren’t ___ chairs in the kitchen.', a:1, why:'(−) → any.' },
+  { s:'We need ___ new glasses for the party.', a:0, why:'(+) → some.' },
+  { s:'Do you have ___ children?', a:1, why:'(?) → any.' },
+  { s:'There are ___ plants in my flat.', a:0, why:'(+) → some.' },
+  { s:'He doesn’t eat ___ meat.', a:1, why:'(−) → any.' },
+  { s:'Would you like ___ tea?', a:0, why:'Предложение (offer) → some, хотя это вопрос.' },
+  { s:'Can I have ___ water, please?', a:0, why:'Просьба (request) → some, хотя это вопрос.' },
+  { s:'Can you give me ___ plates, please?', a:0, why:'Просьба → some.' },
+], ['some','any']);
+mc(9, '#ex9', [
+  { s:'I take a shower ___ 7 o’clock.', a:0, why:'Точное время → at.' },
+  { s:'We go to nature ___ summer.', a:2, why:'Время года → in.' },
+  { s:'My owl sleeps in the day and flies ___ night.', a:0, why:'at night — всегда с at.' },
+  { s:'I wash the plates ___ the evening.', a:2, why:'in the evening.' },
+  { s:'I see my grandma ___ Sundays.', a:1, why:'День недели → on.' },
+  { s:'My birthday is ___ 3rd June.', a:1, why:'Дата → on.' },
+  { s:'I was a child ___ 2010.', a:2, why:'Год → in.' },
+  { s:'I rarely go to the gym ___ Monday morning.', a:1, why:'День + часть дня → on.' },
+  { s:'We have dinner ___ every day at 7.', a:3, f:'—', why:'Перед every предлог не нужен.' },
+  { s:'I visited my parents ___ last weekend.', a:3, f:'—', why:'Перед last предлог не нужен.' },
+], ['at','on','in','—']);
+
+/* ---------- Ex10 scramble ---------- */
+(function(){
+  const S = [
+    ['He is tall and slim.','Он высокий и стройный.'],
+    ['She has long curly hair.','У неё длинные кудрявые волосы.'],
+    ['There is some meat in the fridge.','В холодильнике есть мясо.'],
+    ['I don’t have any plates.','У меня нет тарелок.'],
+    ['I take a shower in the morning.','Я принимаю душ утром.'],
+    ['The mirror is above the desk.','Зеркало над столом.'],
+    ['My flat is small but cosy.','Моя квартира маленькая, но уютная.'],
+  ];
+  TOTAL[10] = S.length;
+  const st = S.map(([t]) => { const w = t.split(' ').map((x, k) => ({ w:x, k })); let pool = shuffle(w); while (pool.map(p => p.w).join(' ') === t) pool = shuffle(w); return { pool, ans:[], checked:false }; });
+  const list = $('#ex10');
+  list.innerHTML = S.map(([, ru], n) => `<li data-n="${n}"><div class="top">${ru}</div><div class="ans"></div><div class="tiles"></div><div class="row"><button class="btn" data-act="check">Проверить</button><span class="fb"></span></div></li>`).join('');
+  const draw = n => { const li = list.children[n], s = st[n], d = s.checked ? ' disabled' : ''; li.querySelector('.ans').innerHTML = s.ans.map((t, i) => `<button class="tile" data-a="${i}"${d}>${t.w}</button>`).join(''); li.querySelector('.tiles').innerHTML = s.pool.map((t, i) => `<button class="tile" data-p="${i}"${d}>${t.w}</button>`).join(''); };
+  S.forEach((_, n) => draw(n));
+  list.addEventListener('click', e => {
+    const li = e.target.closest('li'); if (!li) return; const n = +li.dataset.n, s = st[n]; if (s.checked) return;
+    const t = e.target.closest('.tile'), b = e.target.closest('[data-act]'), fb = li.querySelector('.fb');
+    if (t && t.dataset.p !== undefined){ s.ans.push(s.pool.splice(+t.dataset.p, 1)[0]); fb.textContent = ''; draw(n); }
+    else if (t && t.dataset.a !== undefined){ s.pool.push(s.ans.splice(+t.dataset.a, 1)[0]); fb.textContent = ''; draw(n); }
+    else if (b){
+      if (s.pool.length){ fb.className = 'fb no'; fb.textContent = 'Сначала используй все слова.'; return; }
+      const good = s.ans.map(x => x.w).join(' ') === S[n][0];
+      s.checked = true; b.disabled = true; draw(n); li.classList.add(good ? 'ok' : 'bad');
+      fb.className = 'fb ' + (good ? 'ok' : 'no'); fb.innerHTML = good ? '✓ Правильно!' : '✗ Правильно: <b>' + S[n][0] + '</b>';
+      mark(10, good);
+    }
+  });
+})();
+
+$('#resGrid').innerHTML = Object.keys(EX).map((k, i) => `<div class="res"><div class="n" id="r${k}"></div><div class="l">${i + 1} · ${EX[k]}</div></div>`).join('');
+refresh();
+})();
+</script>
+
+</body></html>
